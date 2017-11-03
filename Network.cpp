@@ -7,8 +7,8 @@ Network::Network()
 {
 	for(size_t i(0); i < N; ++i) {
 		
-		Neuron n(0,0,0,0);
-		all_neurons_.push_back(new Neuron(n));
+		Neuron n(0,0);
+		all_neurons_.push_back(n);
 		assert(all_neurons_.size() <= N);
 	}
 }
@@ -23,44 +23,31 @@ void Network::connectNeurons() {
 	for(unsigned int i(0); i < C_excit; ++i) {
 		
 		auto value = exc(gen);
-		all_neurons_[i]->connectTwoNeurons(value);
+		all_neurons_[i].connectTwoNeurons(value, J);
 	}
 	
 	for(unsigned int i(0); i < C_inhibit; ++i) {
 		
 		auto value = inhib(gen);
-		all_neurons_[i]->connectTwoNeurons(value);
+		all_neurons_[i].connectTwoNeurons(value, -g*J);
 	}
 }
 
-void Network::runSimulation(int ext_clock) {
+void Network::runSimulation() {
 	
+	int ext_clock = 0;
 	ofstream file("neuron.txt", ios::trunc);
+	bool spike = false;
 	
 	while(ext_clock < t_stop) {
 		
-		unsigned int final_t = ext_clock+D;
-		bool spike = false;
-	
-	
 		for(size_t n(0); n < all_neurons_.size(); ++n) {
 			
-			spike = all_neurons_[n]->update(1);
-			
+			spike = all_neurons_[n].update(1);
 			
 			if(spike) {
 				
-				file << ext_clock << "   " << n + 1 << '\n';
-				for(size_t neighbour; neighbour < all_neurons_[n]->getNeighbours().size(); ++neighbour) {
-					
-					if(n < N_ex) {
-							
-						all_neurons_[neighbour]->setBuffer(final_t, J);
-					} else if(n > N_ex) {
-						
-						all_neurons_[neighbour]->setBuffer(final_t, -g*J);
-					}
-				}
+				file << ext_clock << "\t" << n + 1 << '\n';
 			}
 		}
 		ext_clock+=step;

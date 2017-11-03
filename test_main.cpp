@@ -4,9 +4,9 @@
 
 using namespace std;
 
-/*TEST (TestNeuron, Input) {
+TEST (TestNeuron, Input) {
 	
-	Neuron n(0,0,0,0);
+	Neuron n(0,0);
 	n.setInput(1.0);
 	
 	//First update test for one step
@@ -30,7 +30,7 @@ using namespace std;
 
 TEST (TestNeuron, SpikeTimes) {
 
-	Neuron n1(0,0,0,0);
+	Neuron n1(0,0);
 	n1.setInput(1.01);
 	
 	n1.update(924);
@@ -48,7 +48,7 @@ TEST (TestNeuron, SpikeTimes) {
 
 TEST (twoNeurons, NoJSpikes) {
 	
-		Neuron n1(0,0,0,0), n2(0,0,0,0);
+		Neuron n1(0,0), n2(0,0);
 		int Delay =15;
 		n1.setInput(1.01);
 		
@@ -56,7 +56,7 @@ TEST (twoNeurons, NoJSpikes) {
 			
 			if(n1.update(1)){
 			
-				n2.setBuffer(i + Delay, 0.1);
+				n2.update(1);
 				EXPECT_EQ(0.0, n1.getMembPot());
 			}
 			n2.update(1);
@@ -68,4 +68,4 @@ int main(int argc, char **argv) {
 	
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
-}*/
+}
