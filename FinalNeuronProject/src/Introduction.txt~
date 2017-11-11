@@ -1,0 +1,12 @@
+Neuron Project :
+
+The goal of this project was to simulate the behavior of a network composed with 12500 neurons that are interconnected, based on the Brunel model.
+
+In order to achieve this model, we had to make several steps :
+
+1) Implement a neuron class and create a method called update to evaluate the modification of the membrane potential of a neuron due to a constant external input.
+
+2) Create a second neuron and connect it to the first one. The connection was supposed to give a response J (synaptic input) to the post synaptic neuron after a certain delay (1.5 ms here) after the pre synaptic neuron spikes.
+
+3) Iterate the point 2) and create a whole network with 12500 neurons that could be excitatory or inhibitory (for a simplification, we considered the first 10000 neurons excitatory and the last 2500 inhibitory). The percentage of connections of a neuron had to be 10% of the total number of neurons => 1250 connections per neuron. 
+
